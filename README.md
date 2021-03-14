@@ -1,6 +1,6 @@
 # Tools used in the demo
 
-## cluster
+## Manage Cassandra Cluster
 
 This folder contains the dockerized environment.
 
@@ -8,15 +8,17 @@ This folder contains the dockerized environment.
 # Create a two node Cassandra cluster (3.11)
 ./01-start.sh 
 
-# Create a three node Cassandra cluster (3.11)
-./01-start.sh
-
 # Destroy cluster
 ./99-stop.sh
 
 # Log in to node1
-./node-shell.sh
+./node1-shell.sh
+
+# Execute command on node1 (for example `nodetool status`)
+./node1-shell.sh nodetool status
 ```
+
+## Cassandra tools
 
 | Tool | Description |
 |------|-------------|
