@@ -1,4 +1,4 @@
-# Homework
+# Vaccination Data
 
 Play with the COVID vaccination data found in the [country_vaccinations.csv](country_vaccinations.csv) file. The
 original data source is available on [kaggle](https://www.kaggle.com/gpreda/covid-world-vaccination-progress).
@@ -17,6 +17,7 @@ original data source is available on [kaggle](https://www.kaggle.com/gpreda/covi
   # (If it fails, try again in 20 seconds)
   docker exec -it chw cqlsh
   ```
+
 * Execute the following statements to create the table
   ```sql
   -- Create the Cassandra keyspace
