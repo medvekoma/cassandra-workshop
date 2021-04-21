@@ -1,19 +1,20 @@
 # Homework
 
-Play with the COVID vaccination data found in the [country_vaccinations.csv](country_vaccinations.csv) file.
-The original data source is available on [kaggle](https://www.kaggle.com/gpreda/covid-world-vaccination-progress).
+Play with the COVID vaccination data found in the [country_vaccinations.csv](country_vaccinations.csv) file. The
+original data source is available on [kaggle](https://www.kaggle.com/gpreda/covid-world-vaccination-progress).
 
 ## Hints
 
 * You can create a single-node Cassandra by running the following commands:
   ```bash
   # Create a docker container named chw
-  docker run -d --name chw cassandra:3.
+  docker run -d --name chw cassandra:3.11
   
   # Copy the sample data to the root folder of the container
   docker cp country_vaccinations.csv chw:/
   
   # Open the CQL shell inside the docker container
+  # (If it fails, try again in 20 seconds)
   docker exec -it chw cqlsh
   ```
 * Execute the following statements to create the table
@@ -43,6 +44,7 @@ The original data source is available on [kaggle](https://www.kaggle.com/gpreda/
     source_website text,
     PRIMARY KEY (country, iso_code, date1)
   );
+  -- you can try different PRIMARY KEYS
   
   -- Import data
   COPY vaccinations (
@@ -52,3 +54,13 @@ The original data source is available on [kaggle](https://www.kaggle.com/gpreda/
   FROM 'country_vaccinations.csv'
   WITH HEADER = TRUE;
   ```
+
+* Try to run different queries. Some of them will fail.
+
+```sql
+SELECT * FROM vaccinations WHERE country = 'Hungary';
+
+SELECT * FROM vaccinations WHERE country >= 'Hungary';
+
+SELECT * FROM vaccinations WHERE country = 'Hungary' AND iso_code = 'HUN' and date1 >= '2021-04-10';
+```
