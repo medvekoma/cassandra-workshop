@@ -30,11 +30,14 @@ cqlsh
 ```
 ### Nobel dataset
 
-
 * CSV file: `cluster/nobel/laureates.csv`
 * Create a table that is partitioned by `borncountrycode`
 
 ```sql
+-- create keyspace
+CREATE KEYSPACE nobel
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+
 -- create table
 CREATE TABLE nobel.laureates
 (
@@ -49,7 +52,7 @@ CREATE TABLE nobel.laureates
 );
 
 COPY nobel.laureates (year, category, laureateid, firstname, surname, borncountrycode, borncity)
-FROM '/nobel/laureates.csv';
+FROM 'nobel/laureates.csv';
 ```
 
 * Note that we need to add `laureateid` for uniqueness
