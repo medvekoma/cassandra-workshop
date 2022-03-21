@@ -1,5 +1,7 @@
 ## Architecture
 
+**NOTE:** This demo only works with the dockerized Cassandra
+
 #### Setup Data
 
 * Table of Nobel Laureates, partitioned by year
@@ -7,11 +9,8 @@
 * Replication factor of 2
 
 ```bash
-# Add a third node
-docker-compose scale node2=2
-
 # Open shell on node1
-./node1-shell.sh bash
+./node1-shell.sh
 
 # Start CQL shell
 cqlsh

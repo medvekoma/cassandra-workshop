@@ -4,23 +4,40 @@
 * PARTITION KEY is mandatory
 * CLUSTERING KEY is optional
 
-### Nobel dataset
+### Start dockerized Cassandra
+
+**NOTE:** If you already have Cassandra installed, skip this section
 
 ```bash
-# Create new cluster
+cd cluster
+
+# Start cluster
 ./01-start.sh
 
-# Open node1 shell
+# Log in to node1 shell
 ./node1-shell.sh
+```
+
+### Start pre-installed Cassandra
+
+**NOTE:** Skip this section if you use the dockerized Cassandra
+
+```bash
+cd cluster
 
 # Open CQL shell (might need to wait a minute)
 cqlsh
 ```
+### Nobel dataset
 
 * CSV file: `cluster/nobel/laureates.csv`
 * Create a table that is partitioned by `borncountrycode`
 
 ```sql
+-- create keyspace
+CREATE KEYSPACE nobel
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+
 -- create table
 CREATE TABLE nobel.laureates
 (
@@ -35,7 +52,7 @@ CREATE TABLE nobel.laureates
 );
 
 COPY nobel.laureates (year, category, laureateid, firstname, surname, borncountrycode, borncity)
-FROM '/nobel/laureates.csv';
+FROM 'nobel/laureates.csv';
 ```
 
 * Note that we need to add `laureateid` for uniqueness
@@ -71,12 +88,12 @@ SELECT * FROM laureates WHERE borncountrycode = 'HU';
 
 -- add new record without specifying borncountry
 INSERT INTO laureates (borncountrycode , laureateid, category, surname, year) 
-VALUES ('HU', 1001, 'Cassandra', 'Óbuda University', 2020);
+VALUES ('HU', 1001, 'Cassandra', 'Óbuda University', 2021);
 
 -- check table
 SELECT * FROM laureates WHERE borncountrycode = 'HU';
 
 -- add new record
 INSERT INTO laureates (borncountrycode , borncountry, laureateid, category, surname, year) 
-VALUES ('HU', 'Magyarország', 1002, 'Cassandra', 'Óbuda University', 2021);
+VALUES ('HU', 'Magyarország', 1002, 'Cassandra', 'Óbuda University', 2022);
 ```

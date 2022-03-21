@@ -1,12 +1,20 @@
-## Execute CQL statements
+## Start dockerized Cassandra (optional)
+
+**NOTE:** If you already have Cassandra installed, skip this section
 
 ```bash
-# Log in to node1
+cd cluster
+
+# Start cluster
 ./01-start.sh
 
 # Log in to node1 shell
 ./node1-shell.sh
+```
 
+## Start CQL shell
+
+```bash
 # Open CQL shell
 cqlsh
 ```
@@ -22,9 +30,7 @@ WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
 USE demo;
 ```
 
-## Inserting and Updating
-
-#### Create Table
+## Create table and run queries
 
 * Primary key is mandatory
 
@@ -40,6 +46,8 @@ CREATE TABLE user
 ```sql
 INSERT INTO user (id, name)
 VALUES ( 1, 'Ada Lovelace');
+
+SELECT * FROM user;
 
 -- Key violation ?
 INSERT INTO user (id, name)

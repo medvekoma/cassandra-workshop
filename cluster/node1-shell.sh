@@ -2,4 +2,4 @@
 
 COMMAND=${@-bash}
 
-docker exec -it cluster_node1_1 ${COMMAND}
+docker exec -it cluster-node1-1 ${COMMAND}
