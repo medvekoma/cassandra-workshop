@@ -41,7 +41,7 @@ WHERE
   AND incident_timestamp >= '2020-01-01' AND incident_timestamp < '2020-03-01';
 ```                              
 
-### By Vehicle
+### By Driver
 
 Provide the same list for a driver (identified by Driver PID), sorted by vehicle, then by date and time (newest first).
 
@@ -76,8 +76,6 @@ WHERE driver_pid = 100;
 ## Try with data
 
 ```bash
-docker cp incidents.csv cluster_node1_1:.
-../cluster/node1-shell.sh
 cqlsh
 ```
 
