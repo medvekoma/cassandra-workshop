@@ -1,16 +1,3 @@
-## Start dockerized Cassandra (optional)
-
-**NOTE:** If you already have Cassandra installed, skip this section
-
-```bash
-cd cluster
-
-# Start cluster
-./01-start.sh
-
-# Log in to node1 shell
-./node1-shell.sh
-```
 
 ## Start CQL shell
 
@@ -59,4 +46,7 @@ SELECT * FROM user;
 UPDATE user
 SET name = 'Linus Torvalds'
 WHERE id = 2;
+
+-- Delete the keyspace (it will delete the tables as well)
+DROP KEYSPACE demo;
 ```

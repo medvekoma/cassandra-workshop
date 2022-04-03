@@ -1,3 +1,14 @@
+## Setup keyspace
+
+```sql
+-- Create the keyspace (if it was deleted earlier)
+CREATE KEYSPACE demo
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+
+-- Switch to the keyspace
+USE demo;
+```
+
 ## Collections
 
 #### Create table

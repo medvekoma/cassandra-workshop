@@ -1,24 +1,18 @@
 # Vaccination Data
 
-Play with the COVID vaccination data found in the [country_vaccinations.csv](country_vaccinations.csv) file. The
-original data source is available on [kaggle](https://www.kaggle.com/gpreda/covid-world-vaccination-progress).
+Play with the COVID vaccination data found in the [country_vaccinations.csv](country_vaccinations.csv) file. 
+
+_The original data source is available on [kaggle](https://www.kaggle.com/gpreda/covid-world-vaccination-progress). 
+It was slighly cleaned (some incomplete rows were removed)._
 
 ## Hints
 
-* You can create a single-node Cassandra by running the following commands:
+* Execute the following statements to create the table
   ```bash
-  # Create a docker container named chw
-  docker run -d --name chw cassandra:3.11
-  
-  # Copy the sample data to the root folder of the container
-  docker cp country_vaccinations.csv chw:/
-  
-  # Open the CQL shell inside the docker container
-  # (If it fails, try again in 20 seconds)
-  docker exec -it chw cqlsh
+  # Open the Cassandra CLI
+  cqlsh
   ```
 
-* Execute the following statements to create the table
   ```sql
   -- Create the Cassandra keyspace
   CREATE KEYSPACE covid WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
@@ -27,7 +21,7 @@ original data source is available on [kaggle](https://www.kaggle.com/gpreda/covi
   USE covid;
   
   -- Example CREATE TABLE statement
-  CREATE TABLE vaccinations(
+  CREATE TABLE vaccinations (
     country text,
     iso_code text,
     date1 date,
@@ -60,8 +54,14 @@ original data source is available on [kaggle](https://www.kaggle.com/gpreda/covi
 
 ```sql
 SELECT * FROM vaccinations WHERE country = 'Hungary';
+/* 
+  There will be many pages, you have to press ENTER several times 
+  when the text --- MORE --- apprears. 
+  Alternatively, you can press Ctrl+C to quit 
+*/
 
 SELECT * FROM vaccinations WHERE country >= 'Hungary';
 
-SELECT * FROM vaccinations WHERE country = 'Hungary' AND iso_code = 'HUN' and date1 >= '2021-04-10';
+SELECT * FROM vaccinations 
+WHERE country = 'Hungary' AND iso_code = 'HUN' AND date1 >= '2022-03-15';
 ```
