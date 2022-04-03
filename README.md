@@ -11,7 +11,7 @@
 
 The virtual machine has Cassandra installed, both tools are available out of the box. 
 No further configuration is needed
-## Dockerized environment
+## Dockerized environment (optional)
 
 The [cluster](cluster) folder contains the scripts that can be used to set up a
 3-node cluster in a dockerized environment. It can be used on any computer that has

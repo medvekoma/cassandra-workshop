@@ -2,7 +2,8 @@
 
 Play with the COVID vaccination data found in the [country_vaccinations.csv](country_vaccinations.csv) file. 
 
-The original data source is available on [kaggle](https://www.kaggle.com/gpreda/covid-world-vaccination-progress). It was slighly cleaned (removed fields without some specific data).
+_The original data source is available on [kaggle](https://www.kaggle.com/gpreda/covid-world-vaccination-progress). 
+It was slighly cleaned (some incomplete rows were removed)._
 
 ## Hints
 
