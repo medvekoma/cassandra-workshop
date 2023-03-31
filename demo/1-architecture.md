@@ -2,17 +2,29 @@
 
 **NOTE:** This demo only works with the dockerized Cassandra
 
-#### Setup Data
+### Start dockerized Cassandra
+
+```bash
+cd cluster
+
+# Start cluster
+./01-start.sh
+
+# Log in to node1 shell
+./node1-shell.sh
+```
+
+### Data
 
 * Table of Nobel Laureates, partitioned by year
 * Cassandra Cluster with 3 nodes
 * Replication factor of 2
 
-```bash
-# Open shell on node1
-./node1-shell.sh
+### Create Data Table
 
-# Start CQL shell
+Start CQL Shell from the container
+
+```bash
 cqlsh
 ```
 

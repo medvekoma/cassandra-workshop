@@ -11,7 +11,7 @@ USE demo;
 
 ## Collections
 
-#### Create table
+### Create table
 
 * Column `phones` is a map
 
@@ -25,7 +25,7 @@ CREATE TABLE contacts
 );
 ```
 
-#### Insert values
+### Insert values
 
 * Observe brackets in the map field
 
@@ -88,4 +88,36 @@ SET items = items + [{id: 3, name: 'Cable', price: 1.00}]
 WHERE id = 1;
 
 DELETE items[1] FROM invoice WHERE id = 1;
+```
+
+## Inserts and Updates
+
+```sql
+CREATE TABLE user
+(
+  id int,
+  name text,
+  PRIMARY KEY (id)
+);
+```
+
+```sql
+INSERT INTO user (id, name)
+VALUES ( 1, 'Ada Lovelace');
+
+SELECT * FROM user;
+
+-- Key violation ?
+INSERT INTO user (id, name)
+VALUES ( 1, 'Charles Babbage');
+
+SELECT * FROM user;
+
+-- Nothing to update
+UPDATE user
+SET name = 'Linus Torvalds'
+WHERE id = 2;
+
+-- Delete the keyspace (it will delete the tables as well)
+DROP KEYSPACE demo;
 ```

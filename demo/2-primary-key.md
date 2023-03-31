@@ -34,6 +34,9 @@ cqlsh
 * Create a table that is partitioned by `borncountrycode`
 
 ```sql
+-- drop keyspace if already exists
+DROP KEYSPACE nobel;
+
 -- create keyspace
 CREATE KEYSPACE nobel
 WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
@@ -88,12 +91,12 @@ SELECT * FROM laureates WHERE borncountrycode = 'HU';
 
 -- add new record without specifying borncountry
 INSERT INTO laureates (borncountrycode , laureateid, category, surname, year) 
-VALUES ('HU', 1001, 'Cassandra', 'Óbuda University', 2021);
+VALUES ('HU', 1001, 'Cassandra', 'Óbuda University', 2022);
 
 -- check table
 SELECT * FROM laureates WHERE borncountrycode = 'HU';
 
 -- add new record
 INSERT INTO laureates (borncountrycode , borncountry, laureateid, category, surname, year) 
-VALUES ('HU', 'Magyarország', 1002, 'Cassandra', 'Óbuda University', 2022);
+VALUES ('HU', 'Magyarország', 1002, 'Cassandra', 'Óbuda University', 2023);
 ```
