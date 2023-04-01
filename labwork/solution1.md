@@ -3,8 +3,8 @@
 We are creating the datastore for the European Traffic Incidents Office. All incidents arrive with the following information
 
 ## Fields
-* Registration number
 * Registration country code
+* Registration number
 * Driver PID
 * Driver name
 * Incident's date and time
@@ -21,24 +21,26 @@ Provide a list of incidents of a vehicle for a specific date range, sorted by in
 * Sort by: incident timestamp
 
 ```sql
-CREATE KEYSPACE lab WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 2};
+CREATE KEYSPACE lab WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+USE lab;
 
 CREATE TABLE incidents_by_vehicle (
-    registration_nr text,
-    registration_country text,
-    driver_pid bigint,
+    reg_country text,
+    reg_nr text,
+    driver_pid text,
     driver_name text,
-    incident_timestamp timestamp,
+    incident_time timestamp,
     incident_location text,
     penality_points int,
-    PRIMARY KEY ((registration_nr, registration_country), incident_timestamp)
+    PRIMARY KEY ((reg_country, reg_nr), incident_time)
 )
-WITH CLUSTERING ORDER BY (incident_timestamp DESC);      
+WITH CLUSTERING ORDER BY (incident_time DESC);      
 
 SELECT * FROM incidents_by_vehicle 
 WHERE 
-  registration_nr = 'ABC-123' AND registration_country = 'H' 
-  AND incident_timestamp >= '2020-01-01' AND incident_timestamp < '2020-03-01';
+  reg_country = 'H' AND reg_nr = 'ABC-123'  
+  AND incident_time >= '2020-01-01' AND incident_time < '2020-03-01'
+ORDER BY incident_time DESC;
 ```                              
 
 ### By Driver
@@ -50,30 +52,40 @@ Provide the same list for a driver (identified by Driver PID), sorted by vehicle
 
 ```sql
 CREATE TABLE incidents_by_driver (
-    registration_nr text,
-    registration_country text,
-    driver_pid bigint,
-    driver_name text,
-    incident_timestamp timestamp,
+    driver_pid text,
+    driver_name text static,
+    reg_country text,
+    reg_nr text,
+    incident_time timestamp,
     incident_location text,
     penality_points int,
-    PRIMARY KEY ((driver_pid), registration_country, registration_nr, incident_timestamp)
+    PRIMARY KEY ((driver_pid), reg_country, reg_nr, incident_time)
 )
-WITH CLUSTERING ORDER BY (registration_country ASC, registration_nr ASC, incident_timestamp DESC);      
+WITH CLUSTERING ORDER BY (reg_country ASC, reg_nr ASC, incident_time DESC);      
 
 SELECT * FROM incidents_by_driver
 WHERE 
-  driver_pid = 100; 
+  driver_pid = 'H-100'; 
 ```
 
 ### Sum penalty points
 
 ```sql
 SELECT driver_pid, driver_name, SUM(penality_points) AS penality FROM incidents_by_driver  
-WHERE driver_pid = 100;
+WHERE driver_pid = 'H-100';
 ```
 
 ## Try with data
+
+From outside the docker container, copy the CSV file into the container
+
+```bash
+# copy file into container
+docker cp incidents.csv cassandra1:/
+
+# run CLI
+./single-cli
+```
 
 ```bash
 cqlsh
@@ -82,9 +94,9 @@ cqlsh
 ```sql
 USE lab;
 
-COPY incidents_by_vehicle (registration_nr, registration_country, driver_pid, driver_name, incident_timestamp, incident_location, penality_points) 
+COPY incidents_by_vehicle (reg_nr, reg_country, driver_pid, driver_name, incident_time, incident_location, penality_points) 
 FROM 'incidents.csv';
 
-COPY incidents_by_driver (registration_nr, registration_country, driver_pid, driver_name, incident_timestamp, incident_location, penality_points) 
+COPY incidents_by_driver (reg_nr, reg_country, driver_pid, driver_name, incident_time, incident_location, penality_points) 
 FROM 'incidents.csv';
 ```

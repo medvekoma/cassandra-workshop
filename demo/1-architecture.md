@@ -2,17 +2,29 @@
 
 **NOTE:** This demo only works with the dockerized Cassandra
 
-#### Setup Data
+### Start dockerized Cassandra
+
+```bash
+cd cluster
+
+# Start cluster
+./cluster-start.sh
+
+# Log in to node1's shell
+./cluster-cli.sh
+```
+
+### Data
 
 * Table of Nobel Laureates, partitioned by year
 * Cassandra Cluster with 3 nodes
 * Replication factor of 2
 
-```bash
-# Open shell on node1
-./node1-shell.sh
+### Create Data Table
 
-# Start CQL shell
+Start CQL Shell from the container
+
+```bash
 cqlsh
 ```
 
@@ -65,10 +77,10 @@ nodetool getendpoints nobel laureates 3000
 # Exit node1 shell (Ctrl+D)
 
 # Kill one of the nodes
-docker stop cluster_node2_1
+docker stop cluster-node2-1
 
 # Open node1 shell
-./node1-shell.sh
+./cluster-cli.sh
 
 # Check cluster status
 nodetool status
@@ -103,5 +115,5 @@ SELECT * FROM nobel.laureates WHERE year = 2013;
 # Exit node1 shell (Ctrl+D)
 
 # Terminate cluster
-./99-stop.sh
+./cluster-stop.sh
 ```
