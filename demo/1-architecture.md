@@ -8,10 +8,10 @@
 cd cluster
 
 # Start cluster
-./01-start.sh
+./cluster-start.sh
 
-# Log in to node1 shell
-./node1-shell.sh
+# Log in to node1's shell
+./cluster-cli.sh
 ```
 
 ### Data
@@ -77,10 +77,10 @@ nodetool getendpoints nobel laureates 3000
 # Exit node1 shell (Ctrl+D)
 
 # Kill one of the nodes
-docker stop cluster_node2_1
+docker stop cluster-node2-1
 
 # Open node1 shell
-./node1-shell.sh
+./cluster-cli.sh
 
 # Check cluster status
 nodetool status
@@ -115,5 +115,5 @@ SELECT * FROM nobel.laureates WHERE year = 2013;
 # Exit node1 shell (Ctrl+D)
 
 # Terminate cluster
-./99-stop.sh
+./cluster-stop.sh
 ```

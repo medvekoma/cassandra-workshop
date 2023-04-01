@@ -6,37 +6,25 @@
 
 ### Start dockerized Cassandra
 
-**NOTE:** If you already have Cassandra installed, skip this section
-
 ```bash
 cd cluster
 
-# Start cluster
-./01-start.sh
+# Start single node
+./single-start.sh
 
 # Log in to node1 shell
-./node1-shell.sh
-```
+./single-cli.sh
 
-### Start pre-installed Cassandra
-
-**NOTE:** Skip this section if you use the dockerized Cassandra
-
-```bash
-cd cluster
-
-# Open CQL shell (might need to wait a minute)
+# Open CQL shell (It might fail for the first minute or so)
 cqlsh
 ```
+
 ### Nobel dataset
 
 * CSV file: `cluster/nobel/laureates.csv`
 * Create a table that is partitioned by `borncountrycode`
 
 ```sql
--- drop keyspace if already exists
-DROP KEYSPACE nobel;
-
 -- create keyspace
 CREATE KEYSPACE nobel
 WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
@@ -96,7 +84,10 @@ VALUES ('HU', 1001, 'Cassandra', 'Óbuda University', 2022);
 -- check table
 SELECT * FROM laureates WHERE borncountrycode = 'HU';
 
--- add new record
+-- add new record (with a different country name)
 INSERT INTO laureates (borncountrycode , borncountry, laureateid, category, surname, year) 
 VALUES ('HU', 'Magyarország', 1002, 'Cassandra', 'Óbuda University', 2023);
+
+-- check table again (what has changed?)
+SELECT * FROM laureates WHERE borncountrycode = 'HU';
 ```

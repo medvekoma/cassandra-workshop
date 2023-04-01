@@ -37,6 +37,8 @@ VALUES
 
 SELECT * FROM contacts;
 
+-- Run a couple of more statements and check the table after each
+
 UPDATE contacts 
 SET phones = phones + {'Other':'+1 205 7897897'} 
 WHERE id = 1;
@@ -47,7 +49,7 @@ VALUES
   (2, 'Noah Sequel', {'Work':'+36 1 4326112'});
 
 UPDATE contacts 
-SET phones = phones - {'Other'} 
+SET phones = phones - {'Home'} 
 WHERE id = 1;
 ```
 
